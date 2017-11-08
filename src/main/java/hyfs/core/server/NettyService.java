@@ -1,4 +1,4 @@
-package netty.core;
+package hyfs.core.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -13,7 +13,7 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
-import netty.util.DateUtil;
+import hyfs.util.DateUtil;
 
 public class NettyService {
 	private static final String IP = "127.0.0.1";
