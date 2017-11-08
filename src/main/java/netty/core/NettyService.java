@@ -50,15 +50,12 @@ public class NettyService {
 
 					});
 
-			// 绑定并监听断开
 			ChannelFuture cf = bootstrap.bind(IP, PORT).sync();
 
 			System.out.println("game start complete : " + DateUtil.dateFormat(DateUtil.getCurrentUtilDate()));
 
-			// 等待关闭事件
 			cf.channel().closeFuture().sync();
 		} finally {
-			// 释放资源
 			workerGroup.shutdownGracefully();
 			bossGroup.shutdownGracefully();
 		}
