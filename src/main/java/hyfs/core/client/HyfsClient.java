@@ -1,6 +1,5 @@
 package hyfs.core.client;
 
-import hyfs.core.client.ClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -15,8 +14,16 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
+import org.apache.log4j.Logger;
 
-public class NettyClient {
+public class HyfsClient {
+
+	private static Logger logger = Logger.getLogger(HyfsClient.class);
+
+	public static void main(String[] args) throws Exception {
+
+		send();
+	}
 
 	public static void send() {
 		EventLoopGroup group = new NioEventLoopGroup();
@@ -38,17 +45,14 @@ public class NettyClient {
 			});
 
 			ChannelFuture f = b.connect("127.0.0.1", 8090).sync();
-			f.channel().writeAndFlush("hello Service!");
+			f.channel().writeAndFlush("hello---->rpc server!");
 			f.channel().closeFuture().sync();
 
 		} catch (Exception e) {
-			System.out.println("hyfs Exception");
+			logger.error("hyfs error" + e);
 		} finally {
 			group.shutdownGracefully();
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-		send();
-	}
 }

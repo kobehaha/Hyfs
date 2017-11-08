@@ -1,5 +1,6 @@
 package hyfs.core.server;
 
+import hyfs.core.beans.ConfigBean;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -14,26 +15,28 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 import hyfs.util.DateUtil;
+import org.apache.log4j.Logger;
 
-public class NettyService {
-	private static final String IP = "127.0.0.1";
-	private static final int PORT = 8090;
+public class RpcService {
+
 
 	private static final EventLoopGroup bossGroup = new NioEventLoopGroup();
 	private static final EventLoopGroup workerGroup = new NioEventLoopGroup();
 
-	private NettyService() {
+	private Logger logger = Logger.getLogger(RpcService.class);
+
+	private RpcService() {
 	}
 
-	public static NettyService getInstance() {
+	public static RpcService getInstance() {
 		return SingletonHolder.instance;
 	}
 
-	public void start() throws Exception {
-
-		System.out.println("game start : " + DateUtil.dateFormat(DateUtil.getCurrentUtilDate()));
+	public void start(ConfigBean configBean) throws Exception {
 
 		try {
+			logger.info("rpc server prepare ----> start ");
+
 			ServerBootstrap bootstrap = new ServerBootstrap();
 			bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
 					.childHandler(new ChannelInitializer<Channel>() {
@@ -50,9 +53,9 @@ public class NettyService {
 
 					});
 
-			ChannelFuture cf = bootstrap.bind(IP, PORT).sync();
+			ChannelFuture cf = bootstrap.bind(configBean.getIp(), configBean.getPort()).sync();
 
-			System.out.println("game start complete : " + DateUtil.dateFormat(DateUtil.getCurrentUtilDate()));
+			logger.info("rpc server start complete -----> complete");
 
 			cf.channel().closeFuture().sync();
 		} finally {
@@ -68,9 +71,10 @@ public class NettyService {
 		if (bossGroup != null) {
 			bossGroup.shutdownGracefully();
 		}
+
 	}
 
 	private static final class SingletonHolder {
-		private static final NettyService instance = new NettyService();
+		private static final RpcService instance = new RpcService();
 	}
 }
