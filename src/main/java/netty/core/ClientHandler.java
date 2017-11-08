@@ -6,7 +6,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class ClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("client½ÓÊÕµ½·şÎñÆ÷·µ»ØµÄÏûÏ¢: " + msg);
+        System.out.println("clientï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Ï¢: " + msg);
     }
 
     @Override
