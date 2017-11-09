@@ -1,5 +1,6 @@
-package netty.core;
+package hyfs.core.client;
 
+import hyfs.core.client.ClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -41,7 +42,7 @@ public class NettyClient {
 			f.channel().closeFuture().sync();
 
 		} catch (Exception e) {
-			System.out.println("netty Exception");
+			System.out.println("hyfs Exception");
 		} finally {
 			group.shutdownGracefully();
 		}
