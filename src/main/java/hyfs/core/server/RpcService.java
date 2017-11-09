@@ -2,17 +2,14 @@ package hyfs.core.server;
 
 import hyfs.core.beans.ConfigBean;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.util.CharsetUtil;
 import hyfs.util.DateUtil;
 import org.apache.log4j.Logger;
@@ -49,9 +46,15 @@ public class RpcService {
 							pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
 							pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));
 							pipeline.addLast(new TcpServerHandler());
+							pipeline.addLast(new ReadTimeoutHandler(5));
 						}
 
-					});
+					})
+					.option(ChannelOption.SO_BACKLOG,1024)
+					.option(ChannelOption.SO_RCVBUF,32*1024)
+					.option(ChannelOption.SO_SNDBUF,32*1034)
+					.option(ChannelOption.SO_KEEPALIVE,true);
+
 
 			ChannelFuture cf = bootstrap.bind(configBean.getIp(), configBean.getPort()).sync();
 
