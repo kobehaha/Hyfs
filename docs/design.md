@@ -33,4 +33,10 @@ All file info save NameNode
             /block100
             
             
+## Images
+
+![](../image/core.png)
+
+![](../image/architecture.png)
+
             
