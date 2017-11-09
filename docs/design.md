@@ -35,6 +35,7 @@ All file info save NameNode
             
 ## Images
 
+
 ![](../image/core.png)
 
 ![](../image/architecture.png)
