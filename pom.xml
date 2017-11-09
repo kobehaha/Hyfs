@@ -79,11 +79,13 @@
             <version>${slf4j.version}</version>
         </dependency>
 
+
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
             <version>${protobuf.version}</version>
         </dependency>
+
     </dependencies>
 
 </project>
