@@ -14,7 +14,7 @@
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <commons-io.version>1.3.2</commons-io.version>
         <commons-net.version>3.3</commons-net.version>
-        <protobuf.version>3.0.2</protobuf.version>
+        <protobuf-java.version>3.4.0</protobuf-java.version>
 
 
     </properties>
@@ -79,13 +79,12 @@
             <version>${slf4j.version}</version>
         </dependency>
 
-
+        <!-- protobuf-java -->
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>${protobuf.version}</version>
+            <version>${protobuf-java.version}</version>
         </dependency>
-
     </dependencies>
 
 </project>
