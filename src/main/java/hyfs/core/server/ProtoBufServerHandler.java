@@ -1,23 +1,28 @@
 package hyfs.core.server;
 
 
+import com.sun.deploy.util.SessionState;
+import hyfs.proto.MsgProto;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import hyfs.proto.MsgProto;
+import org.apache.log4j.Logger;
 
 public class ProtoBufServerHandler extends ChannelInboundHandlerAdapter {
+
+    private Logger logger = Logger.getLogger(SessionState.Client.class);
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-        System.out.println("======server read msg start===");
+        logger.info("======server read msg start===");
 
         MsgProto.Msg cMsg = (MsgProto.Msg) msg;
 
-        System.out.println("msg head is : "+cMsg.getMsghead());
+        logger.info("msg head is : "+cMsg.getMsghead());
 
-        System.out.println("msg body is : "+cMsg.getMsgbody());
+        logger.info("msg body is : "+cMsg.getMsgbody());
 
-        System.out.println("======server read msg over===");
+        logger.info("======server read msg over===");
 
         MsgProto.Msg.Builder sBuilder = MsgProto.Msg.newBuilder();
 
