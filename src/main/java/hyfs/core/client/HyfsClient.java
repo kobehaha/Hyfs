@@ -11,7 +11,14 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
-public class NettyClient {
+public class HyfsClient {
+
+	private static Logger logger = Logger.getLogger(HyfsClient.class);
+
+	public static void main(String[] args) throws Exception {
+
+		send();
+	}
 
 	public static void send() {
 		EventLoopGroup group = new NioEventLoopGroup();
@@ -32,16 +39,14 @@ public class NettyClient {
 			});
 
 			ChannelFuture f = b.connect("127.0.0.1", 8090).sync();
+			f.channel().writeAndFlush("hello---->rpc server!");
 			f.channel().closeFuture().sync();
 
 		} catch (Exception e) {
-			System.out.println("hyfs Exception");
+			logger.error("hyfs error" + e);
 		} finally {
 			group.shutdownGracefully();
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-		send();
-	}
 }

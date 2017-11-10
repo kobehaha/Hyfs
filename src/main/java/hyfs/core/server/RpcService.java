@@ -1,11 +1,20 @@
 package hyfs.core.server;
 
+import hyfs.core.beans.ConfigBean;
 import hyfs.proto.MsgProto;
 import hyfs.util.DateUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.util.CharsetUtil;
+import hyfs.util.DateUtil;
+import org.apache.log4j.Logger;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
@@ -13,32 +22,32 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
-public class NettyService {
-	private static final String IP = "127.0.0.1";
-	private static final int PORT = 8090;
+public class RpcService {
+
 
 	private static final EventLoopGroup bossGroup = new NioEventLoopGroup();
 	private static final EventLoopGroup workerGroup = new NioEventLoopGroup();
 
-	private NettyService() {
+	private Logger logger = Logger.getLogger(RpcService.class);
+
+	private RpcService() {
 	}
 
-	public static NettyService getInstance() {
+	public static RpcService getInstance() {
 		return SingletonHolder.instance;
 	}
 
-	public void start() throws Exception {
-
-		System.out.println("game start : " + DateUtil.dateFormat(DateUtil.getCurrentUtilDate()));
+	public void start(ConfigBean configBean) throws Exception {
 
 		try {
+			logger.info("rpc server prepare ----> start ");
+
 			ServerBootstrap bootstrap = new ServerBootstrap();
-			bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 100)
-					.handler(new LoggingHandler(LogLevel.INFO))
+			bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
 					.childHandler(new ChannelInitializer<Channel>() {
 
 						@Override
-						public void initChannel(Channel ch) throws Exception {
+						protected void initChannel(Channel ch) throws Exception {
 							ChannelPipeline pipeline = ch.pipeline();
 							pipeline.addLast(new ProtobufVarint32FrameDecoder());
 							pipeline.addLast(new ProtobufDecoder(MsgProto.Msg.getDefaultInstance()));
@@ -47,11 +56,16 @@ public class NettyService {
 							pipeline.addLast(new ProtoBufServerHandler());
 						}
 
-					});
+					})
+					.option(ChannelOption.SO_BACKLOG,1024)
+					.option(ChannelOption.SO_RCVBUF,32*1024)
+					.option(ChannelOption.SO_SNDBUF,32*1034)
+					.option(ChannelOption.SO_KEEPALIVE,true);
 
-			ChannelFuture cf = bootstrap.bind(IP, PORT).sync();
 
-			System.out.println("game start complete : " + DateUtil.dateFormat(DateUtil.getCurrentUtilDate()));
+			ChannelFuture cf = bootstrap.bind(configBean.getIp(), configBean.getPort()).sync();
+
+			logger.info("rpc server start complete -----> complete");
 
 			cf.channel().closeFuture().sync();
 		} finally {
@@ -67,9 +81,10 @@ public class NettyService {
 		if (bossGroup != null) {
 			bossGroup.shutdownGracefully();
 		}
+
 	}
 
 	private static final class SingletonHolder {
-		private static final NettyService instance = new NettyService();
+		private static final RpcService instance = new RpcService();
 	}
 }

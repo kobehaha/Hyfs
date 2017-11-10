@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+
+option java_package = "com.hyfs.proto";
+option java_outer_classname = "Request";
+
+
+message Request {
+     int64 id=1;
+     string body=100;
+}
