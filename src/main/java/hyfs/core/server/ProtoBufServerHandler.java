@@ -2,7 +2,7 @@ package hyfs.core.server;
 
 
 import com.sun.deploy.util.SessionState;
-import hyfs.proto.MsgProto;
+import hyfs.core.proto.RequestMsg;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.apache.log4j.Logger;
@@ -16,21 +16,13 @@ public class ProtoBufServerHandler extends ChannelInboundHandlerAdapter {
 
         logger.info("======server read msg start===");
 
+        RequestMsg.Request cMsg = (RequestMsg.Request) msg;
 
-        MsgProto.Msg cMsg = (MsgProto.Msg) msg;
+        logger.info("msg head is : "+cMsg.getId());
 
-        logger.info("msg head is : "+cMsg.getMsghead());
-
-        logger.info("msg body is : "+cMsg.getMsgbody());
+        logger.info("msg body is : "+cMsg.getBody());
 
         logger.info("======server read msg over===");
-
-        MsgProto.Msg.Builder sBuilder = MsgProto.Msg.newBuilder();
-
-        sBuilder.setMsghead("head $");
-        sBuilder.setMsgbody("msg is receive");
-        ctx.channel().writeAndFlush(sBuilder.build());
-
 
     }
 
