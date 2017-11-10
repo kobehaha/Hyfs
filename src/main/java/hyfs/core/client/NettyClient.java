@@ -1,20 +1,15 @@
 package hyfs.core.client;
 
-import hyfs.core.client.ClientHandler;
+import hyfs.proto.MsgProto;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-import io.netty.util.CharsetUtil;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
 public class NettyClient {
 
@@ -28,17 +23,15 @@ public class NettyClient {
 				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
 					ChannelPipeline pipeline = ch.pipeline();
-					pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
-					pipeline.addLast("frameEncoder", new LengthFieldPrepender(4));
-					pipeline.addLast("decoder", new StringDecoder(CharsetUtil.UTF_8));
-					pipeline.addLast("encoder", new StringEncoder(CharsetUtil.UTF_8));
-
-					pipeline.addLast("handler", new ClientHandler());
+					pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
+					pipeline.addLast(new ProtobufEncoder());
+                    pipeline.addLast(new ProtobufVarint32FrameDecoder());
+                    pipeline.addLast(new ProtobufDecoder(MsgProto.Msg.getDefaultInstance()));
+					pipeline.addLast(new ProtoBufClientHandler());
 				}
 			});
 
 			ChannelFuture f = b.connect("127.0.0.1", 8090).sync();
-			f.channel().writeAndFlush("hello Service!");
 			f.channel().closeFuture().sync();
 
 		} catch (Exception e) {
