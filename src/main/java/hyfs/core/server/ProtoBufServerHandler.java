@@ -16,6 +16,7 @@ public class ProtoBufServerHandler extends ChannelInboundHandlerAdapter {
 
         logger.info("======server read msg start===");
 
+
         MsgProto.Msg cMsg = (MsgProto.Msg) msg;
 
         logger.info("msg head is : "+cMsg.getMsghead());
