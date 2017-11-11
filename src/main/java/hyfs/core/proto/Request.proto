@@ -1,11 +1,24 @@
 syntax = "proto3";
 
 
-option java_package = "com.hyfs.proto";
-option java_outer_classname = "Request";
+option java_package = "hyfs.core.proto";
+option java_outer_classname = "RequestMsg";
 
-
-message Request {
-     int64 id=1;
-     string body=100;
+message Request{
+     int64 id = 1;
+     Commond commond = 2;
+     string msgbody = 3;
 }
+
+message Commond{
+     string REQUEST_UPLOAD_DATANODE = 1;
+     string REQUEST_DOWNLOAD_DATANODE = 2;
+     string UPLOAD_FINISH = 3;
+     string UPLOAD_BREAK = 4;
+     string UPLOAD_START = 5;
+     string DELETE_FILE = 6;
+     string CHECK_MD5 = 7;
+}
+
+
+
