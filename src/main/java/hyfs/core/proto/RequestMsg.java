@@ -24,14 +24,27 @@ public final class RequestMsg {
     long getId();
 
     /**
-     * <code>string body = 100;</code>
+     * <code>.Commond commond = 2;</code>
      */
-    java.lang.String getBody();
+    boolean hasCommond();
     /**
-     * <code>string body = 100;</code>
+     * <code>.Commond commond = 2;</code>
+     */
+    hyfs.core.proto.RequestMsg.Commond getCommond();
+    /**
+     * <code>.Commond commond = 2;</code>
+     */
+    hyfs.core.proto.RequestMsg.CommondOrBuilder getCommondOrBuilder();
+
+    /**
+     * <code>string msgbody = 3;</code>
+     */
+    java.lang.String getMsgbody();
+    /**
+     * <code>string msgbody = 3;</code>
      */
     com.google.protobuf.ByteString
-        getBodyBytes();
+        getMsgbodyBytes();
   }
   /**
    * Protobuf type {@code Request}
@@ -47,7 +60,7 @@ public final class RequestMsg {
     }
     private Request() {
       id_ = 0L;
-      body_ = "";
+      msgbody_ = "";
     }
 
     @java.lang.Override
@@ -83,10 +96,23 @@ public final class RequestMsg {
               id_ = input.readInt64();
               break;
             }
-            case 802: {
+            case 18: {
+              hyfs.core.proto.RequestMsg.Commond.Builder subBuilder = null;
+              if (commond_ != null) {
+                subBuilder = commond_.toBuilder();
+              }
+              commond_ = input.readMessage(hyfs.core.proto.RequestMsg.Commond.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(commond_);
+                commond_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              body_ = s;
+              msgbody_ = s;
               break;
             }
           }
@@ -122,34 +148,55 @@ public final class RequestMsg {
       return id_;
     }
 
-    public static final int BODY_FIELD_NUMBER = 100;
-    private volatile java.lang.Object body_;
+    public static final int COMMOND_FIELD_NUMBER = 2;
+    private hyfs.core.proto.RequestMsg.Commond commond_;
     /**
-     * <code>string body = 100;</code>
+     * <code>.Commond commond = 2;</code>
      */
-    public java.lang.String getBody() {
-      java.lang.Object ref = body_;
+    public boolean hasCommond() {
+      return commond_ != null;
+    }
+    /**
+     * <code>.Commond commond = 2;</code>
+     */
+    public hyfs.core.proto.RequestMsg.Commond getCommond() {
+      return commond_ == null ? hyfs.core.proto.RequestMsg.Commond.getDefaultInstance() : commond_;
+    }
+    /**
+     * <code>.Commond commond = 2;</code>
+     */
+    public hyfs.core.proto.RequestMsg.CommondOrBuilder getCommondOrBuilder() {
+      return getCommond();
+    }
+
+    public static final int MSGBODY_FIELD_NUMBER = 3;
+    private volatile java.lang.Object msgbody_;
+    /**
+     * <code>string msgbody = 3;</code>
+     */
+    public java.lang.String getMsgbody() {
+      java.lang.Object ref = msgbody_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        body_ = s;
+        msgbody_ = s;
         return s;
       }
     }
     /**
-     * <code>string body = 100;</code>
+     * <code>string msgbody = 3;</code>
      */
     public com.google.protobuf.ByteString
-        getBodyBytes() {
-      java.lang.Object ref = body_;
+        getMsgbodyBytes() {
+      java.lang.Object ref = msgbody_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        body_ = b;
+        msgbody_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -171,8 +218,11 @@ public final class RequestMsg {
       if (id_ != 0L) {
         output.writeInt64(1, id_);
       }
-      if (!getBodyBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 100, body_);
+      if (commond_ != null) {
+        output.writeMessage(2, getCommond());
+      }
+      if (!getMsgbodyBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, msgbody_);
       }
       unknownFields.writeTo(output);
     }
@@ -186,8 +236,12 @@ public final class RequestMsg {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, id_);
       }
-      if (!getBodyBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(100, body_);
+      if (commond_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getCommond());
+      }
+      if (!getMsgbodyBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, msgbody_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -207,8 +261,13 @@ public final class RequestMsg {
       boolean result = true;
       result = result && (getId()
           == other.getId());
-      result = result && getBody()
-          .equals(other.getBody());
+      result = result && (hasCommond() == other.hasCommond());
+      if (hasCommond()) {
+        result = result && getCommond()
+            .equals(other.getCommond());
+      }
+      result = result && getMsgbody()
+          .equals(other.getMsgbody());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -223,8 +282,12 @@ public final class RequestMsg {
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getId());
-      hash = (37 * hash) + BODY_FIELD_NUMBER;
-      hash = (53 * hash) + getBody().hashCode();
+      if (hasCommond()) {
+        hash = (37 * hash) + COMMOND_FIELD_NUMBER;
+        hash = (53 * hash) + getCommond().hashCode();
+      }
+      hash = (37 * hash) + MSGBODY_FIELD_NUMBER;
+      hash = (53 * hash) + getMsgbody().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -356,7 +419,13 @@ public final class RequestMsg {
         super.clear();
         id_ = 0L;
 
-        body_ = "";
+        if (commondBuilder_ == null) {
+          commond_ = null;
+        } else {
+          commond_ = null;
+          commondBuilder_ = null;
+        }
+        msgbody_ = "";
 
         return this;
       }
@@ -381,7 +450,12 @@ public final class RequestMsg {
       public hyfs.core.proto.RequestMsg.Request buildPartial() {
         hyfs.core.proto.RequestMsg.Request result = new hyfs.core.proto.RequestMsg.Request(this);
         result.id_ = id_;
-        result.body_ = body_;
+        if (commondBuilder_ == null) {
+          result.commond_ = commond_;
+        } else {
+          result.commond_ = commondBuilder_.build();
+        }
+        result.msgbody_ = msgbody_;
         onBuilt();
         return result;
       }
@@ -426,8 +500,11 @@ public final class RequestMsg {
         if (other.getId() != 0L) {
           setId(other.getId());
         }
-        if (!other.getBody().isEmpty()) {
-          body_ = other.body_;
+        if (other.hasCommond()) {
+          mergeCommond(other.getCommond());
+        }
+        if (!other.getMsgbody().isEmpty()) {
+          msgbody_ = other.msgbody_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -483,71 +560,188 @@ public final class RequestMsg {
         return this;
       }
 
-      private java.lang.Object body_ = "";
+      private hyfs.core.proto.RequestMsg.Commond commond_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          hyfs.core.proto.RequestMsg.Commond, hyfs.core.proto.RequestMsg.Commond.Builder, hyfs.core.proto.RequestMsg.CommondOrBuilder> commondBuilder_;
       /**
-       * <code>string body = 100;</code>
+       * <code>.Commond commond = 2;</code>
        */
-      public java.lang.String getBody() {
-        java.lang.Object ref = body_;
+      public boolean hasCommond() {
+        return commondBuilder_ != null || commond_ != null;
+      }
+      /**
+       * <code>.Commond commond = 2;</code>
+       */
+      public hyfs.core.proto.RequestMsg.Commond getCommond() {
+        if (commondBuilder_ == null) {
+          return commond_ == null ? hyfs.core.proto.RequestMsg.Commond.getDefaultInstance() : commond_;
+        } else {
+          return commondBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.Commond commond = 2;</code>
+       */
+      public Builder setCommond(hyfs.core.proto.RequestMsg.Commond value) {
+        if (commondBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          commond_ = value;
+          onChanged();
+        } else {
+          commondBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.Commond commond = 2;</code>
+       */
+      public Builder setCommond(
+          hyfs.core.proto.RequestMsg.Commond.Builder builderForValue) {
+        if (commondBuilder_ == null) {
+          commond_ = builderForValue.build();
+          onChanged();
+        } else {
+          commondBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.Commond commond = 2;</code>
+       */
+      public Builder mergeCommond(hyfs.core.proto.RequestMsg.Commond value) {
+        if (commondBuilder_ == null) {
+          if (commond_ != null) {
+            commond_ =
+              hyfs.core.proto.RequestMsg.Commond.newBuilder(commond_).mergeFrom(value).buildPartial();
+          } else {
+            commond_ = value;
+          }
+          onChanged();
+        } else {
+          commondBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.Commond commond = 2;</code>
+       */
+      public Builder clearCommond() {
+        if (commondBuilder_ == null) {
+          commond_ = null;
+          onChanged();
+        } else {
+          commond_ = null;
+          commondBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.Commond commond = 2;</code>
+       */
+      public hyfs.core.proto.RequestMsg.Commond.Builder getCommondBuilder() {
+        
+        onChanged();
+        return getCommondFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.Commond commond = 2;</code>
+       */
+      public hyfs.core.proto.RequestMsg.CommondOrBuilder getCommondOrBuilder() {
+        if (commondBuilder_ != null) {
+          return commondBuilder_.getMessageOrBuilder();
+        } else {
+          return commond_ == null ?
+              hyfs.core.proto.RequestMsg.Commond.getDefaultInstance() : commond_;
+        }
+      }
+      /**
+       * <code>.Commond commond = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          hyfs.core.proto.RequestMsg.Commond, hyfs.core.proto.RequestMsg.Commond.Builder, hyfs.core.proto.RequestMsg.CommondOrBuilder> 
+          getCommondFieldBuilder() {
+        if (commondBuilder_ == null) {
+          commondBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              hyfs.core.proto.RequestMsg.Commond, hyfs.core.proto.RequestMsg.Commond.Builder, hyfs.core.proto.RequestMsg.CommondOrBuilder>(
+                  getCommond(),
+                  getParentForChildren(),
+                  isClean());
+          commond_ = null;
+        }
+        return commondBuilder_;
+      }
+
+      private java.lang.Object msgbody_ = "";
+      /**
+       * <code>string msgbody = 3;</code>
+       */
+      public java.lang.String getMsgbody() {
+        java.lang.Object ref = msgbody_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          body_ = s;
+          msgbody_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>string body = 100;</code>
+       * <code>string msgbody = 3;</code>
        */
       public com.google.protobuf.ByteString
-          getBodyBytes() {
-        java.lang.Object ref = body_;
+          getMsgbodyBytes() {
+        java.lang.Object ref = msgbody_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          body_ = b;
+          msgbody_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>string body = 100;</code>
+       * <code>string msgbody = 3;</code>
        */
-      public Builder setBody(
+      public Builder setMsgbody(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        body_ = value;
+        msgbody_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string body = 100;</code>
+       * <code>string msgbody = 3;</code>
        */
-      public Builder clearBody() {
+      public Builder clearMsgbody() {
         
-        body_ = getDefaultInstance().getBody();
+        msgbody_ = getDefaultInstance().getMsgbody();
         onChanged();
         return this;
       }
       /**
-       * <code>string body = 100;</code>
+       * <code>string msgbody = 3;</code>
        */
-      public Builder setBodyBytes(
+      public Builder setMsgbodyBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        body_ = value;
+        msgbody_ = value;
         onChanged();
         return this;
       }
@@ -600,11 +794,1360 @@ public final class RequestMsg {
 
   }
 
+  public interface CommondOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Commond)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string REQUEST_UPLOAD_DATANODE = 1;</code>
+     */
+    java.lang.String getREQUESTUPLOADDATANODE();
+    /**
+     * <code>string REQUEST_UPLOAD_DATANODE = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getREQUESTUPLOADDATANODEBytes();
+
+    /**
+     * <code>string REQUEST_DOWNLOAD_DATANODE = 2;</code>
+     */
+    java.lang.String getREQUESTDOWNLOADDATANODE();
+    /**
+     * <code>string REQUEST_DOWNLOAD_DATANODE = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getREQUESTDOWNLOADDATANODEBytes();
+
+    /**
+     * <code>string UPLOAD_FINISH = 3;</code>
+     */
+    java.lang.String getUPLOADFINISH();
+    /**
+     * <code>string UPLOAD_FINISH = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getUPLOADFINISHBytes();
+
+    /**
+     * <code>string UPLOAD_BREAK = 4;</code>
+     */
+    java.lang.String getUPLOADBREAK();
+    /**
+     * <code>string UPLOAD_BREAK = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getUPLOADBREAKBytes();
+
+    /**
+     * <code>string UPLOAD_START = 5;</code>
+     */
+    java.lang.String getUPLOADSTART();
+    /**
+     * <code>string UPLOAD_START = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getUPLOADSTARTBytes();
+
+    /**
+     * <code>string DELETE_FILE = 6;</code>
+     */
+    java.lang.String getDELETEFILE();
+    /**
+     * <code>string DELETE_FILE = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getDELETEFILEBytes();
+
+    /**
+     * <code>string CHECK_MD5 = 7;</code>
+     */
+    java.lang.String getCHECKMD5();
+    /**
+     * <code>string CHECK_MD5 = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getCHECKMD5Bytes();
+  }
+  /**
+   * Protobuf type {@code Commond}
+   */
+  public  static final class Commond extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:Commond)
+      CommondOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Commond.newBuilder() to construct.
+    private Commond(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Commond() {
+      rEQUESTUPLOADDATANODE_ = "";
+      rEQUESTDOWNLOADDATANODE_ = "";
+      uPLOADFINISH_ = "";
+      uPLOADBREAK_ = "";
+      uPLOADSTART_ = "";
+      dELETEFILE_ = "";
+      cHECKMD5_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Commond(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              rEQUESTUPLOADDATANODE_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              rEQUESTDOWNLOADDATANODE_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              uPLOADFINISH_ = s;
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              uPLOADBREAK_ = s;
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              uPLOADSTART_ = s;
+              break;
+            }
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              dELETEFILE_ = s;
+              break;
+            }
+            case 58: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              cHECKMD5_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return hyfs.core.proto.RequestMsg.internal_static_Commond_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return hyfs.core.proto.RequestMsg.internal_static_Commond_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              hyfs.core.proto.RequestMsg.Commond.class, hyfs.core.proto.RequestMsg.Commond.Builder.class);
+    }
+
+    public static final int REQUEST_UPLOAD_DATANODE_FIELD_NUMBER = 1;
+    private volatile java.lang.Object rEQUESTUPLOADDATANODE_;
+    /**
+     * <code>string REQUEST_UPLOAD_DATANODE = 1;</code>
+     */
+    public java.lang.String getREQUESTUPLOADDATANODE() {
+      java.lang.Object ref = rEQUESTUPLOADDATANODE_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        rEQUESTUPLOADDATANODE_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string REQUEST_UPLOAD_DATANODE = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getREQUESTUPLOADDATANODEBytes() {
+      java.lang.Object ref = rEQUESTUPLOADDATANODE_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        rEQUESTUPLOADDATANODE_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int REQUEST_DOWNLOAD_DATANODE_FIELD_NUMBER = 2;
+    private volatile java.lang.Object rEQUESTDOWNLOADDATANODE_;
+    /**
+     * <code>string REQUEST_DOWNLOAD_DATANODE = 2;</code>
+     */
+    public java.lang.String getREQUESTDOWNLOADDATANODE() {
+      java.lang.Object ref = rEQUESTDOWNLOADDATANODE_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        rEQUESTDOWNLOADDATANODE_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string REQUEST_DOWNLOAD_DATANODE = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getREQUESTDOWNLOADDATANODEBytes() {
+      java.lang.Object ref = rEQUESTDOWNLOADDATANODE_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        rEQUESTDOWNLOADDATANODE_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int UPLOAD_FINISH_FIELD_NUMBER = 3;
+    private volatile java.lang.Object uPLOADFINISH_;
+    /**
+     * <code>string UPLOAD_FINISH = 3;</code>
+     */
+    public java.lang.String getUPLOADFINISH() {
+      java.lang.Object ref = uPLOADFINISH_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        uPLOADFINISH_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string UPLOAD_FINISH = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getUPLOADFINISHBytes() {
+      java.lang.Object ref = uPLOADFINISH_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        uPLOADFINISH_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int UPLOAD_BREAK_FIELD_NUMBER = 4;
+    private volatile java.lang.Object uPLOADBREAK_;
+    /**
+     * <code>string UPLOAD_BREAK = 4;</code>
+     */
+    public java.lang.String getUPLOADBREAK() {
+      java.lang.Object ref = uPLOADBREAK_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        uPLOADBREAK_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string UPLOAD_BREAK = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getUPLOADBREAKBytes() {
+      java.lang.Object ref = uPLOADBREAK_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        uPLOADBREAK_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int UPLOAD_START_FIELD_NUMBER = 5;
+    private volatile java.lang.Object uPLOADSTART_;
+    /**
+     * <code>string UPLOAD_START = 5;</code>
+     */
+    public java.lang.String getUPLOADSTART() {
+      java.lang.Object ref = uPLOADSTART_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        uPLOADSTART_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string UPLOAD_START = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getUPLOADSTARTBytes() {
+      java.lang.Object ref = uPLOADSTART_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        uPLOADSTART_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int DELETE_FILE_FIELD_NUMBER = 6;
+    private volatile java.lang.Object dELETEFILE_;
+    /**
+     * <code>string DELETE_FILE = 6;</code>
+     */
+    public java.lang.String getDELETEFILE() {
+      java.lang.Object ref = dELETEFILE_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        dELETEFILE_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string DELETE_FILE = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDELETEFILEBytes() {
+      java.lang.Object ref = dELETEFILE_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        dELETEFILE_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CHECK_MD5_FIELD_NUMBER = 7;
+    private volatile java.lang.Object cHECKMD5_;
+    /**
+     * <code>string CHECK_MD5 = 7;</code>
+     */
+    public java.lang.String getCHECKMD5() {
+      java.lang.Object ref = cHECKMD5_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        cHECKMD5_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string CHECK_MD5 = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getCHECKMD5Bytes() {
+      java.lang.Object ref = cHECKMD5_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        cHECKMD5_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getREQUESTUPLOADDATANODEBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, rEQUESTUPLOADDATANODE_);
+      }
+      if (!getREQUESTDOWNLOADDATANODEBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, rEQUESTDOWNLOADDATANODE_);
+      }
+      if (!getUPLOADFINISHBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, uPLOADFINISH_);
+      }
+      if (!getUPLOADBREAKBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, uPLOADBREAK_);
+      }
+      if (!getUPLOADSTARTBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, uPLOADSTART_);
+      }
+      if (!getDELETEFILEBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, dELETEFILE_);
+      }
+      if (!getCHECKMD5Bytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, cHECKMD5_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getREQUESTUPLOADDATANODEBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, rEQUESTUPLOADDATANODE_);
+      }
+      if (!getREQUESTDOWNLOADDATANODEBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, rEQUESTDOWNLOADDATANODE_);
+      }
+      if (!getUPLOADFINISHBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, uPLOADFINISH_);
+      }
+      if (!getUPLOADBREAKBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, uPLOADBREAK_);
+      }
+      if (!getUPLOADSTARTBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, uPLOADSTART_);
+      }
+      if (!getDELETEFILEBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, dELETEFILE_);
+      }
+      if (!getCHECKMD5Bytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, cHECKMD5_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof hyfs.core.proto.RequestMsg.Commond)) {
+        return super.equals(obj);
+      }
+      hyfs.core.proto.RequestMsg.Commond other = (hyfs.core.proto.RequestMsg.Commond) obj;
+
+      boolean result = true;
+      result = result && getREQUESTUPLOADDATANODE()
+          .equals(other.getREQUESTUPLOADDATANODE());
+      result = result && getREQUESTDOWNLOADDATANODE()
+          .equals(other.getREQUESTDOWNLOADDATANODE());
+      result = result && getUPLOADFINISH()
+          .equals(other.getUPLOADFINISH());
+      result = result && getUPLOADBREAK()
+          .equals(other.getUPLOADBREAK());
+      result = result && getUPLOADSTART()
+          .equals(other.getUPLOADSTART());
+      result = result && getDELETEFILE()
+          .equals(other.getDELETEFILE());
+      result = result && getCHECKMD5()
+          .equals(other.getCHECKMD5());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + REQUEST_UPLOAD_DATANODE_FIELD_NUMBER;
+      hash = (53 * hash) + getREQUESTUPLOADDATANODE().hashCode();
+      hash = (37 * hash) + REQUEST_DOWNLOAD_DATANODE_FIELD_NUMBER;
+      hash = (53 * hash) + getREQUESTDOWNLOADDATANODE().hashCode();
+      hash = (37 * hash) + UPLOAD_FINISH_FIELD_NUMBER;
+      hash = (53 * hash) + getUPLOADFINISH().hashCode();
+      hash = (37 * hash) + UPLOAD_BREAK_FIELD_NUMBER;
+      hash = (53 * hash) + getUPLOADBREAK().hashCode();
+      hash = (37 * hash) + UPLOAD_START_FIELD_NUMBER;
+      hash = (53 * hash) + getUPLOADSTART().hashCode();
+      hash = (37 * hash) + DELETE_FILE_FIELD_NUMBER;
+      hash = (53 * hash) + getDELETEFILE().hashCode();
+      hash = (37 * hash) + CHECK_MD5_FIELD_NUMBER;
+      hash = (53 * hash) + getCHECKMD5().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static hyfs.core.proto.RequestMsg.Commond parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(hyfs.core.proto.RequestMsg.Commond prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Commond}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Commond)
+        hyfs.core.proto.RequestMsg.CommondOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return hyfs.core.proto.RequestMsg.internal_static_Commond_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return hyfs.core.proto.RequestMsg.internal_static_Commond_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                hyfs.core.proto.RequestMsg.Commond.class, hyfs.core.proto.RequestMsg.Commond.Builder.class);
+      }
+
+      // Construct using hyfs.core.proto.RequestMsg.Commond.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        rEQUESTUPLOADDATANODE_ = "";
+
+        rEQUESTDOWNLOADDATANODE_ = "";
+
+        uPLOADFINISH_ = "";
+
+        uPLOADBREAK_ = "";
+
+        uPLOADSTART_ = "";
+
+        dELETEFILE_ = "";
+
+        cHECKMD5_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return hyfs.core.proto.RequestMsg.internal_static_Commond_descriptor;
+      }
+
+      public hyfs.core.proto.RequestMsg.Commond getDefaultInstanceForType() {
+        return hyfs.core.proto.RequestMsg.Commond.getDefaultInstance();
+      }
+
+      public hyfs.core.proto.RequestMsg.Commond build() {
+        hyfs.core.proto.RequestMsg.Commond result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public hyfs.core.proto.RequestMsg.Commond buildPartial() {
+        hyfs.core.proto.RequestMsg.Commond result = new hyfs.core.proto.RequestMsg.Commond(this);
+        result.rEQUESTUPLOADDATANODE_ = rEQUESTUPLOADDATANODE_;
+        result.rEQUESTDOWNLOADDATANODE_ = rEQUESTDOWNLOADDATANODE_;
+        result.uPLOADFINISH_ = uPLOADFINISH_;
+        result.uPLOADBREAK_ = uPLOADBREAK_;
+        result.uPLOADSTART_ = uPLOADSTART_;
+        result.dELETEFILE_ = dELETEFILE_;
+        result.cHECKMD5_ = cHECKMD5_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof hyfs.core.proto.RequestMsg.Commond) {
+          return mergeFrom((hyfs.core.proto.RequestMsg.Commond)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(hyfs.core.proto.RequestMsg.Commond other) {
+        if (other == hyfs.core.proto.RequestMsg.Commond.getDefaultInstance()) return this;
+        if (!other.getREQUESTUPLOADDATANODE().isEmpty()) {
+          rEQUESTUPLOADDATANODE_ = other.rEQUESTUPLOADDATANODE_;
+          onChanged();
+        }
+        if (!other.getREQUESTDOWNLOADDATANODE().isEmpty()) {
+          rEQUESTDOWNLOADDATANODE_ = other.rEQUESTDOWNLOADDATANODE_;
+          onChanged();
+        }
+        if (!other.getUPLOADFINISH().isEmpty()) {
+          uPLOADFINISH_ = other.uPLOADFINISH_;
+          onChanged();
+        }
+        if (!other.getUPLOADBREAK().isEmpty()) {
+          uPLOADBREAK_ = other.uPLOADBREAK_;
+          onChanged();
+        }
+        if (!other.getUPLOADSTART().isEmpty()) {
+          uPLOADSTART_ = other.uPLOADSTART_;
+          onChanged();
+        }
+        if (!other.getDELETEFILE().isEmpty()) {
+          dELETEFILE_ = other.dELETEFILE_;
+          onChanged();
+        }
+        if (!other.getCHECKMD5().isEmpty()) {
+          cHECKMD5_ = other.cHECKMD5_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        hyfs.core.proto.RequestMsg.Commond parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (hyfs.core.proto.RequestMsg.Commond) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object rEQUESTUPLOADDATANODE_ = "";
+      /**
+       * <code>string REQUEST_UPLOAD_DATANODE = 1;</code>
+       */
+      public java.lang.String getREQUESTUPLOADDATANODE() {
+        java.lang.Object ref = rEQUESTUPLOADDATANODE_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          rEQUESTUPLOADDATANODE_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string REQUEST_UPLOAD_DATANODE = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getREQUESTUPLOADDATANODEBytes() {
+        java.lang.Object ref = rEQUESTUPLOADDATANODE_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          rEQUESTUPLOADDATANODE_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string REQUEST_UPLOAD_DATANODE = 1;</code>
+       */
+      public Builder setREQUESTUPLOADDATANODE(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        rEQUESTUPLOADDATANODE_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string REQUEST_UPLOAD_DATANODE = 1;</code>
+       */
+      public Builder clearREQUESTUPLOADDATANODE() {
+        
+        rEQUESTUPLOADDATANODE_ = getDefaultInstance().getREQUESTUPLOADDATANODE();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string REQUEST_UPLOAD_DATANODE = 1;</code>
+       */
+      public Builder setREQUESTUPLOADDATANODEBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        rEQUESTUPLOADDATANODE_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object rEQUESTDOWNLOADDATANODE_ = "";
+      /**
+       * <code>string REQUEST_DOWNLOAD_DATANODE = 2;</code>
+       */
+      public java.lang.String getREQUESTDOWNLOADDATANODE() {
+        java.lang.Object ref = rEQUESTDOWNLOADDATANODE_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          rEQUESTDOWNLOADDATANODE_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string REQUEST_DOWNLOAD_DATANODE = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getREQUESTDOWNLOADDATANODEBytes() {
+        java.lang.Object ref = rEQUESTDOWNLOADDATANODE_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          rEQUESTDOWNLOADDATANODE_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string REQUEST_DOWNLOAD_DATANODE = 2;</code>
+       */
+      public Builder setREQUESTDOWNLOADDATANODE(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        rEQUESTDOWNLOADDATANODE_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string REQUEST_DOWNLOAD_DATANODE = 2;</code>
+       */
+      public Builder clearREQUESTDOWNLOADDATANODE() {
+        
+        rEQUESTDOWNLOADDATANODE_ = getDefaultInstance().getREQUESTDOWNLOADDATANODE();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string REQUEST_DOWNLOAD_DATANODE = 2;</code>
+       */
+      public Builder setREQUESTDOWNLOADDATANODEBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        rEQUESTDOWNLOADDATANODE_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object uPLOADFINISH_ = "";
+      /**
+       * <code>string UPLOAD_FINISH = 3;</code>
+       */
+      public java.lang.String getUPLOADFINISH() {
+        java.lang.Object ref = uPLOADFINISH_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          uPLOADFINISH_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string UPLOAD_FINISH = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getUPLOADFINISHBytes() {
+        java.lang.Object ref = uPLOADFINISH_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          uPLOADFINISH_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string UPLOAD_FINISH = 3;</code>
+       */
+      public Builder setUPLOADFINISH(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        uPLOADFINISH_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string UPLOAD_FINISH = 3;</code>
+       */
+      public Builder clearUPLOADFINISH() {
+        
+        uPLOADFINISH_ = getDefaultInstance().getUPLOADFINISH();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string UPLOAD_FINISH = 3;</code>
+       */
+      public Builder setUPLOADFINISHBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        uPLOADFINISH_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object uPLOADBREAK_ = "";
+      /**
+       * <code>string UPLOAD_BREAK = 4;</code>
+       */
+      public java.lang.String getUPLOADBREAK() {
+        java.lang.Object ref = uPLOADBREAK_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          uPLOADBREAK_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string UPLOAD_BREAK = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getUPLOADBREAKBytes() {
+        java.lang.Object ref = uPLOADBREAK_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          uPLOADBREAK_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string UPLOAD_BREAK = 4;</code>
+       */
+      public Builder setUPLOADBREAK(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        uPLOADBREAK_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string UPLOAD_BREAK = 4;</code>
+       */
+      public Builder clearUPLOADBREAK() {
+        
+        uPLOADBREAK_ = getDefaultInstance().getUPLOADBREAK();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string UPLOAD_BREAK = 4;</code>
+       */
+      public Builder setUPLOADBREAKBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        uPLOADBREAK_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object uPLOADSTART_ = "";
+      /**
+       * <code>string UPLOAD_START = 5;</code>
+       */
+      public java.lang.String getUPLOADSTART() {
+        java.lang.Object ref = uPLOADSTART_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          uPLOADSTART_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string UPLOAD_START = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getUPLOADSTARTBytes() {
+        java.lang.Object ref = uPLOADSTART_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          uPLOADSTART_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string UPLOAD_START = 5;</code>
+       */
+      public Builder setUPLOADSTART(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        uPLOADSTART_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string UPLOAD_START = 5;</code>
+       */
+      public Builder clearUPLOADSTART() {
+        
+        uPLOADSTART_ = getDefaultInstance().getUPLOADSTART();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string UPLOAD_START = 5;</code>
+       */
+      public Builder setUPLOADSTARTBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        uPLOADSTART_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object dELETEFILE_ = "";
+      /**
+       * <code>string DELETE_FILE = 6;</code>
+       */
+      public java.lang.String getDELETEFILE() {
+        java.lang.Object ref = dELETEFILE_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          dELETEFILE_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string DELETE_FILE = 6;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDELETEFILEBytes() {
+        java.lang.Object ref = dELETEFILE_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          dELETEFILE_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string DELETE_FILE = 6;</code>
+       */
+      public Builder setDELETEFILE(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        dELETEFILE_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string DELETE_FILE = 6;</code>
+       */
+      public Builder clearDELETEFILE() {
+        
+        dELETEFILE_ = getDefaultInstance().getDELETEFILE();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string DELETE_FILE = 6;</code>
+       */
+      public Builder setDELETEFILEBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        dELETEFILE_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object cHECKMD5_ = "";
+      /**
+       * <code>string CHECK_MD5 = 7;</code>
+       */
+      public java.lang.String getCHECKMD5() {
+        java.lang.Object ref = cHECKMD5_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          cHECKMD5_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string CHECK_MD5 = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getCHECKMD5Bytes() {
+        java.lang.Object ref = cHECKMD5_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          cHECKMD5_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string CHECK_MD5 = 7;</code>
+       */
+      public Builder setCHECKMD5(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        cHECKMD5_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string CHECK_MD5 = 7;</code>
+       */
+      public Builder clearCHECKMD5() {
+        
+        cHECKMD5_ = getDefaultInstance().getCHECKMD5();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string CHECK_MD5 = 7;</code>
+       */
+      public Builder setCHECKMD5Bytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        cHECKMD5_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:Commond)
+    }
+
+    // @@protoc_insertion_point(class_scope:Commond)
+    private static final hyfs.core.proto.RequestMsg.Commond DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new hyfs.core.proto.RequestMsg.Commond();
+    }
+
+    public static hyfs.core.proto.RequestMsg.Commond getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Commond>
+        PARSER = new com.google.protobuf.AbstractParser<Commond>() {
+      public Commond parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Commond(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Commond> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Commond> getParserForType() {
+      return PARSER;
+    }
+
+    public hyfs.core.proto.RequestMsg.Commond getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Request_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Request_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Commond_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Commond_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -614,9 +2157,14 @@ public final class RequestMsg {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\027protoFile/Request.proto\"#\n\007Request\022\n\n\002" +
-      "id\030\001 \001(\003\022\014\n\004body\030d \001(\tB\035\n\017hyfs.core.prot" +
-      "oB\nRequestMsgb\006proto3"
+      "\n\027protoFile/Request.proto\"A\n\007Request\022\n\n\002" +
+      "id\030\001 \001(\003\022\031\n\007commond\030\002 \001(\0132\010.Commond\022\017\n\007m" +
+      "sgbody\030\003 \001(\t\"\270\001\n\007Commond\022\037\n\027REQUEST_UPLO" +
+      "AD_DATANODE\030\001 \001(\t\022!\n\031REQUEST_DOWNLOAD_DA" +
+      "TANODE\030\002 \001(\t\022\025\n\rUPLOAD_FINISH\030\003 \001(\t\022\024\n\014U" +
+      "PLOAD_BREAK\030\004 \001(\t\022\024\n\014UPLOAD_START\030\005 \001(\t\022" +
+      "\023\n\013DELETE_FILE\030\006 \001(\t\022\021\n\tCHECK_MD5\030\007 \001(\tB" +
+      "\035\n\017hyfs.core.protoB\nRequestMsgb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -635,7 +2183,13 @@ public final class RequestMsg {
     internal_static_Request_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Request_descriptor,
-        new java.lang.String[] { "Id", "Body", });
+        new java.lang.String[] { "Id", "Commond", "Msgbody", });
+    internal_static_Commond_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_Commond_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Commond_descriptor,
+        new java.lang.String[] { "REQUESTUPLOADDATANODE", "REQUESTDOWNLOADDATANODE", "UPLOADFINISH", "UPLOADBREAK", "UPLOADSTART", "DELETEFILE", "CHECKMD5", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
