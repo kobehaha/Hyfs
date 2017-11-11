@@ -1,17 +1,13 @@
 package hyfs.core.server;
 
 import hyfs.core.beans.ConfigBean;
+import hyfs.core.proto.RequestMsg;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-import io.netty.handler.timeout.ReadTimeoutHandler;
-import io.netty.util.CharsetUtil;
-import hyfs.util.DateUtil;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import org.apache.log4j.Logger;
 
 public class RpcService {
@@ -41,12 +37,9 @@ public class RpcService {
 						@Override
 						protected void initChannel(Channel ch) throws Exception {
 							ChannelPipeline pipeline = ch.pipeline();
-							pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
-							pipeline.addLast(new LengthFieldPrepender(4));
-							pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
-							pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));
-							pipeline.addLast(new TcpServerHandler());
-							pipeline.addLast(new ReadTimeoutHandler(5));
+							pipeline.addLast(new ProtobufVarint32FrameDecoder());
+							pipeline.addLast(new ProtobufDecoder(RequestMsg.Request.getDefaultInstance()));
+							pipeline.addLast(new ProtoBufServerHandler());
 						}
 
 					})
