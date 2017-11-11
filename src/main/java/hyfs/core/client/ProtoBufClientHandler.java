@@ -28,7 +28,7 @@ public class ProtoBufClientHandler extends ChannelInboundHandlerAdapter {
        RequestMsg.Request.Builder builder =  RequestMsg.Request.newBuilder();
 
         builder.setId(20);
-        builder.setBody("hello proto");
+        builder.setMsgbody("hello proto");
 
         ctx.writeAndFlush(builder.build());
         logger.info("======client send msg over===");

@@ -20,7 +20,7 @@ public class ProtoBufServerHandler extends ChannelInboundHandlerAdapter {
 
         logger.info("msg head is : "+cMsg.getId());
 
-        logger.info("msg body is : "+cMsg.getBody());
+        logger.info("msg body is : "+cMsg.getMsgbody());
 
         logger.info("======server read msg over===");
 
