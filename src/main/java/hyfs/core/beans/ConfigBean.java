@@ -5,7 +5,7 @@ public class ConfigBean {
 
 	private String ip = "127.0.0.1";
 
-	private int port = 1001;
+	private int port = 8090;
 
 	private String log = "/tmp/logs/hyfs.log";
 

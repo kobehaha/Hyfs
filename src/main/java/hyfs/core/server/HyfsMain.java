@@ -2,7 +2,7 @@ package hyfs.core.server;
 
 
 import hyfs.core.beans.ConfigBean;
-import hyfs.core.config.ConfigLoader;
+import hyfs.core.config.MainConfigLoader;
 import org.apache.log4j.Logger;
 
 public class HyfsMain {
@@ -12,7 +12,7 @@ public class HyfsMain {
 	public static void main(String[] args) {
 
 		try {
-			ConfigBean configBean = ConfigLoader.load();
+			ConfigBean configBean = new MainConfigLoader().load();
 			RpcService.getInstance().start(configBean);
 		} catch (Exception e) {
 			e.printStackTrace();
