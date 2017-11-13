@@ -36,6 +36,7 @@ public class ChunkServerConfigLoader implements ConfigLoader{
 			configBean.setIp(pro.getProperty("ip"));
 			configBean.setLog(pro.getProperty("log"));
 			configBean.setFilePort(Integer.valueOf(pro.getProperty("filePort")));
+			configBean.setDataDir(pro.getProperty("dataDir"));
 			configBean.setPort(Integer.valueOf(pro.getProperty("port")));
 			return configBean;
 

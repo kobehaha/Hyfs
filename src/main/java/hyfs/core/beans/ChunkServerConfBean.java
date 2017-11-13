@@ -18,6 +18,17 @@ public class ChunkServerConfBean extends ConfigBean {
 
 	private String log = "/tmp/logs/hyfs_ChunkServer.log";
 
+	private String dataDir = "/tmp/data/";
+
+
+	public String getDataDir() {
+		return dataDir;
+	}
+
+	public void setDataDir(String dataDir) {
+		this.dataDir = dataDir;
+	}
+
 
 	@Override
 	public String getIp() {

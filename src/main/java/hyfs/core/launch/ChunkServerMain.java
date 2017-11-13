@@ -2,6 +2,7 @@ package hyfs.core.launch;
 
 import hyfs.core.beans.ConfigBean;
 import hyfs.core.chunkserver.rpc.ChunkServerRpcServer;
+import hyfs.core.chunkserver.tpcfile.ChunkServerFileService;
 import hyfs.core.config.ChunkServerConfigLoader;
 
 /**
@@ -16,7 +17,8 @@ public class ChunkServerMain {
 
 		try{
 			ConfigBean config = new ChunkServerConfigLoader().load();
-			ChunkServerRpcServer.getInstance().start(config);
+			//ChunkServerRpcServer.getInstance().start(config);
+			ChunkServerFileService.getInstance().start(config);
 		}catch (Exception e){
 			e.printStackTrace();
 		}

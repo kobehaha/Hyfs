@@ -44,4 +44,8 @@ public class BlockManager implements  BlockManagerInter {
 		return null;
 	}
 
+	public boolean compareBlock(){
+		return true;
+	}
+
 }
